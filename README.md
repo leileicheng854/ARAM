@@ -1,53 +1,70 @@
-# ARAM
 # ARMA: Mitigating Catastrophic Forgetting using Attention-Regularized Model Averaging in Continual Fine-tuning Large Language Models
 
 ## Introduction
 
 Welcome to the repository for **ARMA**, a novel framework designed to address catastrophic forgetting in large language models (LLMs) during continual fine-tuning. Catastrophic forgetting is a common challenge when fine-tuning models on domain-specific tasks, often leading to a decline in performance on previously learned tasks. ARMA mitigates this issue by utilizing attention-regularized model averaging, which balances the trade-off between domain-specific improvements and general task performance.
 
+
+```markdown
+# model_merge_optimizer
+
+## Introduction
+
+Welcome to the repository for **model_merge_optimizer**, a Python script designed to merge two causal language models by optimizing attention layers' weights. This approach allows for a more nuanced blending of model capabilities, potentially improving performance on specific tasks by fine-tuning the balance between two models.
+
 ## Features
 
-- **Attention-Regularized Model Averaging**: Uses attention distribution to maintain general task performance while fine-tuning for domain-specific tasks.
-- **Reinforcement Learning Optimization**: Employs reinforcement learning to find the optimal balance between the base model and the fine-tuned model, avoiding exhaustive parameter searches.
-- **General Task Preservation**: Ensures that the model retains its ability to perform well on general tasks even after domain-specific fine-tuning.
+- **Model Merging with Attention Optimization**: The script merges two pre-trained causal language models by adjusting their attention layers' weights, allowing for fine-tuned control over model performance.
+- **Customizable Alpha Blending**: Provides an alpha parameter to control the blending ratio between the two models, which is optimized using gradient descent.
+- **Multiple Difference Metrics**: Includes functions to compute differences between models using MSE, cosine similarity, Earth Mover's Distance (EMD), and KL divergence.
 
 ## Installation
 
-The code is currently being organized and will be uploaded soon. Please stay tuned for updates.
+To use this script, you need to have Python 3.7 or later installed, along with the following libraries:
+
+```bash
+pip install torch transformers
+```
 
 ## Usage
 
-### Training the Model
+### Loading Models
 
-Detailed instructions for preparing your dataset and running the training script will be provided once the code is uploaded.
+You can load your models using the `AutoModelForCausalLM` and `AutoTokenizer` from the Hugging Face `transformers` library. Replace the `checkpoint_1` and `checkpoint_2` paths with the paths to your models.
 
-### Evaluation
+### Merging Models
 
-Instructions for evaluating the model's performance on various benchmarks will be made available with the code release.
+The `merge_models` function allows you to merge the two models using a specified alpha value. This function combines the attention layers' weights from both models based on the alpha parameter.
 
-### Hyperparameter Tuning
+### Optimizing Alpha
 
-Guidelines for exploring different configurations and tuning hyperparameters will be provided in future updates.
+The `find_optimal_alpha` function automates the process of finding the optimal alpha by minimizing the difference between the merged model and one of the original models using gradient descent.
 
-### Experiment Reproduction
 
-Steps to reproduce the experiments from the paper will be shared once the code is uploaded.
+## Example
 
-## Results
+```python
+# Merge two models with an initial alpha of 0.5
+alpha = find_optimal_alpha(model_1, model_2, data_loader, initial_alpha=0.5)
+merged_model = merge_models(model_1, model_2, alpha)
+```
 
-The experimental results show that ARMA significantly reduces catastrophic forgetting while maintaining or even improving performance on general tasks. More detailed results and performance metrics will be included with the code release.
 
 ## Contributing
 
-Contributions are welcome! More details on how to contribute will be added once the repository is fully set up.
+Contributions are welcome! Please submit pull requests or open issues to contribute to the project.
 
 ## License
 
-This project is licensed under the MIT License. The `LICENSE.md` file will be added soon.
+This project is licensed under the MIT License. Please refer to the `LICENSE.md` file for more details.
 
 ## Acknowledgments
 
 
+
 For any issues or questions, please open an issue in this repository or contact the maintainers directly.
 
-Happy experimenting!
+Happy coding!
+```
+
+This `README.md` reflects the specific functionality of the code provided and should help users understand how to implement and optimize the model merging process.
